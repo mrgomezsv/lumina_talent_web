@@ -143,3 +143,90 @@ document.addEventListener('DOMContentLoaded', function() {
     // Trigger once on load in case elements are already in view
     animateOnScroll();
 });
+
+// Añadir esto a las funciones existentes en el archivo script.js
+
+// Video Modal para el mensaje del CEO
+const videoBtn = document.querySelector('.video-btn');
+if (videoBtn) {
+    videoBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const videoUrl = this.getAttribute('href');
+        
+        // Crear modal
+        const modal = document.createElement('div');
+        modal.className = 'video-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <iframe width="560" height="315" src="${videoUrl.replace('watch?v=', 'embed/')}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
+        
+        // Cerrar modal
+        const closeModal = modal.querySelector('.close-modal');
+        closeModal.addEventListener('click', function() {
+            document.body.removeChild(modal);
+            document.body.style.overflow = '';
+        });
+        
+        // Cerrar al hacer clic fuera
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                document.body.removeChild(modal);
+                document.body.style.overflow = '';
+            }
+        });
+    });
+}
+
+// Añadir esto a los estilos CSS para el modal
+/*
+.video-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.video-modal .modal-content {
+    position: relative;
+    width: 80%;
+    max-width: 800px;
+}
+
+.video-modal iframe {
+    width: 100%;
+    height: 450px;
+    border: none;
+    border-radius: 8px;
+}
+
+.close-modal {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .video-modal .modal-content {
+        width: 95%;
+    }
+    
+    .video-modal iframe {
+        height: 300px;
+    }
+}
+*/
